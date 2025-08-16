@@ -11,7 +11,7 @@ jobs:
       - name: Get the code.
         uses: actions/checkout@v5
       - name: Install all the dependencies.
-        run: npm Install
+        run: npm install
       - name: Update all the dependencies with sanity.
         run: npm ci
       - name: Test the code.
