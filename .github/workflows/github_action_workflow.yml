@@ -1,0 +1,63 @@
+name: github-actions-workflow
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+jobs:
+  test:
+    runs-on: 'macos-latest'
+    steps:
+      - name: Get the code.
+        uses: actions/checkout@v5
+      - name: Install all the dependencies.
+        run: npm Install
+      - name: Update all the dependencies with sanity.
+        run: npm ci
+      - name: Test the code.
+        run: npm run test
+      - name: Finish Test.
+        run: echo "All the process under the Test job is successfully completed!"
+  build:
+    needs: test
+    runs-on: 'macos-latest'
+    steps:
+      - name: Get the code.
+        run: actions/checkout@v5
+      - name: Install Latest Version of NODE.
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - name: Install all the dependencies.
+        run: npm install
+      - name: Update all the dependencies with sanity.
+        run: npm ci
+      - name: Build the code. 
+        run: npm run build.
+      - name: Upload the job artifacts of the project build.
+        uses: actions/upload-artifact@v4
+        with:
+          name: expense-calculator-build-job-artifacts
+          path: 
+            dist
+  deploy:
+    needs: build
+    runs-on: 'macos-latest'
+    steps:
+      - name: Download the job artifacts of the project build .
+        uses: actions/upload-artifact@v4
+        with:
+          name: expense-calculator-build-job-artifacts
+      - name: Get the code.
+        run: actions/checkout@v5
+      - name: Install Latest Version of NODE.
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - name: Install all the dependencies.
+        run: npm install
+      - name: Update all the dependencies with sanity.
+        run: npm ci
+      - name: Build the code. 
+        run: npm run build.
+      
