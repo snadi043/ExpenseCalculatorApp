@@ -41,6 +41,11 @@ function App() {
 
   return (
     <div className="App">
+      <header class='header'>
+        <h1>
+          Learn React
+        </h1>
+      </header>
       <NewExpense onAddExpense = {addExpenseHandler}/>
       <Expenses items={expenses}/>
     </div> 
