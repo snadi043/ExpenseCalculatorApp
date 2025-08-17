@@ -21,7 +21,11 @@ jobs:
   build:
     needs: test
     runs-on: 'macos-latest'
+    outputs:
+      build_job_output: ${{ steps.test_job_step.outputs.build_job_output }}
     steps:
+      - id: test_job_step
+        run: echo "my_output_name=dist" >> "$GITHUB_OUTPUT"
       - name: Get the code.
         uses: actions/checkout@v5
       - name: Install Latest Version of NODE.
@@ -34,6 +38,8 @@ jobs:
         run: npm ci
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
+      - name: Publish the JS filename
+        run: find dist/assests/*.js -type f -execdir echo 'build_job_output={}' >> $GITHUB_OUTPUT ';'
       - name: Upload the job artifacts of the project build.
         uses: actions/upload-artifact@v4
         with:
@@ -58,6 +64,8 @@ jobs:
           include-hiddeb-files: false
       - name: Output Contents
         run: ls
+      - name: Output contents from the build job.
+        run: echo "${{ needs.build.outputs.build_job_output }}"
       - name: Get the code.
         uses: actions/checkout@v5
       - name: Install Latest Version of NODE.
