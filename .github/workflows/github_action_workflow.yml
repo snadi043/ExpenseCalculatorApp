@@ -46,7 +46,7 @@ jobs:
     needs: build
     runs-on: 'macos-latest'
     steps:
-      - name: Download the job artifacts of the project build .
+      - name: Download the job artifacts of the project build.
         uses: actions/upload-artifact@v4
         with:
           name: expense-calculator-build-job-artifacts
@@ -69,6 +69,6 @@ jobs:
       - name: Update all the dependencies with sanity.
         run: npm ci
       - name: Build the code. 
-        run: NODE_OPTIONS=--openssl-legacy-provider npm run build.
+        run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Deploy the application to the server.
         run: echo "Deployemnt Successfully Completed."
