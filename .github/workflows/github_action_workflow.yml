@@ -36,7 +36,7 @@ jobs:
       - name: Test Step level Environment Variable.
         env:
           step-env-variable: 'Step env variable'
-        run: echo "${{ step-env-variable }}"
+        run: echo "${step-env-variable}"
   build:
     needs: test
     runs-on: 'macos-latest'
