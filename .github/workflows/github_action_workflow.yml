@@ -30,13 +30,13 @@ jobs:
       - name: Finish Test.
         run: echo "All the process under the Test job is successfully completed!"
       - name: Test Workflow Environment Variable.
-        run: echo "$workflow-level-env-variable-1 and $workflow-level-env-variable-2"
+        run: echo "${{ workflow-level-env-variable-1 }} and ${{ workflow-level-env-variable-2 }}"
       - name: Test Job level Environment Variable.
         run: echo "${{ env.test_env_1 }} and ${{ env.test_env_2 }}"
       - name: Test Step level Environment Variable.
         env:
           step-env-variable: 'Step env variable'
-        run: echo "$step-env-variable"
+        run: echo "${{ step-env-variable }}"
   build:
     needs: test
     runs-on: 'macos-latest'
