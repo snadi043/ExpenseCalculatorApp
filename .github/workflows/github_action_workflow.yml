@@ -5,8 +5,8 @@ on:
       - 'main'
       - 'master'
 env:
-  WORKFLOW_ENV_1: "Test_Workflow"
-  WORKFLOW_ENV_2: "Build_Workflow"
+  WORKFLOW_ENV_1: ${{ secrets.WORKFLOW_ENV_1 }}
+  WORKFLOW_ENV_2: ${{ secrets.WORKFLOW_ENV_2 }}
 jobs:
   test:
     runs-on: 'macos-latest'
