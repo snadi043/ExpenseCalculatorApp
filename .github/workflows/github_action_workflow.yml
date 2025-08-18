@@ -12,6 +12,11 @@ jobs:
         uses: actions/checkout@v5
       - name: Install all the dependencies.
         run: npm install
+      - name: Caching all the dependencies.
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/pacakge-lock.json') }}
       - name: Update all the dependencies with sanity.
         run: npm ci
       - name: Test the code.
@@ -32,6 +37,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 23
+      - name: Caching the dependencies.
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install all the dependencies.
         run: npm install
       - name: Update all the dependencies with sanity.
@@ -73,6 +83,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 23
+      - name: Cache all the dependencies.
+        uses: actions/cache@v4
+        with: 
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install all the dependencies.
         run: npm install
       - name: Update all the dependencies with sanity.
