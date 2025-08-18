@@ -5,14 +5,14 @@ on:
       - 'main'
       - 'master'
 env:
-  workflow-level-env-variable-1: "Test_Workflow"
-  workflow-level-env-variable-2: "Build_Workflow"
+  WORKFLOW_ENV_1: "Test_Workflow"
+  WORKFLOW_ENV_2: "Build_Workflow"
 jobs:
   test:
     runs-on: 'macos-latest'
     env: 
-      test_env_1: "Hello Test Env 1."
-      test_env_2: "Thank you. BYE."
+      TEST_ENV_1: "Hello Test Env 1."
+      TEST_ENV_2: "Thank you. BYE."
     steps:
       - name: Get the code.
         uses: actions/checkout@v5
@@ -30,13 +30,13 @@ jobs:
       - name: Finish Test.
         run: echo "All the process under the Test job is successfully completed!"
       - name: Test Workflow Environment Variable.
-        run: echo "${$workflow-level-env-variable-1 and $workflow-level-env-variable-2 }"
+        run: echo "$WORKFLOW_ENV_1" and "$WORKFLOW_ENV_2"
       - name: Test Job level Environment Variable.
-        run: echo "${$env.test_env_1 and $env.test_env_2 }"
+        run: echo "${{env.TEST_ENV_1}}" and "${{env.TEST_ENV_2}}"
       - name: Test Step level Environment Variable.
         env:
-          step-env-variable: 'Step env variable'
-        run: echo "${step-env-variable}"
+          STEP_ENV: 'Step env variable'
+        run: echo "$STEP_ENV"
   build:
     needs: test
     runs-on: 'macos-latest'
