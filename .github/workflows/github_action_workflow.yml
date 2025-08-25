@@ -9,7 +9,12 @@ env:
   WORKFLOW_ENV_2: ${{ secrets.WORKFLOW_ENV_2 }}
 jobs:
   test:
-    runs-on: 'macos-latest'
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macos-latest]
+        node-version: [23, 24]
+      fail-fast: true
+    runs-on: ${{ matrix.operating-system }}
     env: 
       TEST_ENV_1: "Hello Test Env 1."
       TEST_ENV_2: "Thank you. BYE."
@@ -39,7 +44,7 @@ jobs:
         run: echo "$STEP_ENV"
   build:
     needs: test
-    runs-on: 'macos-latest'
+    runs-on: ${{ matrix.operating-system }}
     outputs:
       build_job_output: ${{ steps.test_job_step.outputs.build_job_output }}
     steps:
@@ -75,7 +80,7 @@ jobs:
         run: ls
   deploy:
     needs: build
-    runs-on: 'macos-latest'
+    runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Download the job artifacts of the project build.
         uses: actions/upload-artifact@v4
@@ -96,7 +101,7 @@ jobs:
       - name: Install Latest Version of NODE.
         uses: actions/setup-node@v4
         with:
-          node-version: 23
+          node-version: ${{ matrix.node-version }}
       - name: Cache all the dependencies.
         uses: actions/cache@v4
         with: 
@@ -109,4 +114,4 @@ jobs:
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Deploy the application to the server.
-        run: echo "Deployemnt Successfully Completed."
+        run: echo "Deployment Successfully Completed."
