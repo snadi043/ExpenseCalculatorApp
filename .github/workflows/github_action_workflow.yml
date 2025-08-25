@@ -77,7 +77,7 @@ jobs:
       - name: Upload the job artifacts of the project build.
         uses: actions/upload-artifact@v4
         with:
-          name: expense-calculator-build-job-artifacts-${{ matrix.operating-system }}
+          name: expense-calculator-build-job-artifacts-${{ matrix.operating-system }}-${{ matrix.node-version }}
           path: 
             build
       - name: Verify the files in the dist path
@@ -93,7 +93,7 @@ jobs:
       - name: Download the job artifacts of the project build.
         uses: actions/upload-artifact@v4
         with:
-          name: expense-calculator-deploy-job-artifacts-${{ matrix.operating-system }}
+          name: expense-calculator-deploy-job-artifacts-${{ matrix.operating-system }}-${{ matrix.node-version }}
           path:
             build
           if-no-files-found: warn
