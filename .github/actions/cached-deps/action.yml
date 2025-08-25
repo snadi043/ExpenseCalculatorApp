@@ -8,7 +8,10 @@ runs:
       with:
         path: ~/.npm
         key: deps-node-modules-${{ hashFiles('**/pacakge-lock.json') }}
+        shell: bash
     - name: Install all the dependencies.
       run: npm install
+      shell: bash
     - name: Update all the dependencies with sanity.
       run: npm ci
+      shell: bash

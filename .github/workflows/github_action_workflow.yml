@@ -23,7 +23,7 @@ jobs:
       - name: Get the code.
         uses: actions/checkout@v5
       - name: Using Customized Composite Actions for Caching.
-        uses: ./github/actions/cached-deps/composite-action.yml
+        uses: ./github/actions/cached-deps/
       - name: Test the code.
         run: npm run test
       - name: Finish Test.
@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Using Customized Composite Actions for Caching.
-        uses: ./github/actions/cached-deps/composite-action.yml
+        uses: ./github/actions/cached-deps/
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Publish the JS filename
@@ -98,7 +98,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Using Customized Composite Actions for Caching.
-        uses: ./github/actions/cached-deps/composite-action.yml
+        uses: ./github/actions/cached-deps/
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Deploy the application to the server.
