@@ -24,6 +24,8 @@ jobs:
         uses: actions/checkout@v5
       - name: Using Customized Composite Actions for Caching.
         uses: ./.github/actions/cached-deps
+        with:
+          caching: 'false'
       - name: Test the code.
         run: npm run test
       - name: Finish Test.

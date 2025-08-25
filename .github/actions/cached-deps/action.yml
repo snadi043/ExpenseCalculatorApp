@@ -1,16 +1,26 @@
 name: github-custom-composite-actions
 description: 'Customized Composite Actions to Implement Caching.'
+inputs:
+  caching:
+    description: 'Check the scenario to implement caching.'
+    required: false
+    default: 'true'
 runs: 
   using: composite
   steps:
     - name: Caching all the dependencies.
+      id: cache-npm
+      if: inputs.caching == true
       uses: actions/cache@v4
       with:
         path: ~/.npm
         key: deps-node-modules-${{ hashFiles('**/pacakge-lock.json') }}
         shell: bash
-    - name: Install all the dependencies.
-      run: npm install
+    - name:  Checking for the cache hit and Installing all the dependencies conditionally.
+      if: steps.cache-npm.outputs.cache-hit != 'true' || inputs.caching != 'true'
+      run: |
+        npm list
+        npm install
       shell: bash
     - name: Update all the dependencies with sanity.
       run: npm ci
