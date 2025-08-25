@@ -88,7 +88,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         node-version: [23, 24]
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Download the job artifacts of the project build.
         uses: actions/upload-artifact@v4
