@@ -11,10 +11,10 @@ jobs:
   test:
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         node-version: [23, 24]
       fail-fast: true
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     env: 
       TEST_ENV_1: "Hello Test Env 1."
       TEST_ENV_2: "Thank you. BYE."
@@ -44,6 +44,10 @@ jobs:
         run: echo "$STEP_ENV"
   build:
     needs: test
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macos-latest]
+        node-version: [23, 24]
     runs-on: ${{ matrix.operating-system }}
     outputs:
       build_job_output: ${{ steps.test_job_step.outputs.build_job_output }}
@@ -55,7 +59,7 @@ jobs:
       - name: Install Latest Version of NODE.
         uses: actions/setup-node@v4
         with:
-          node-version: 23
+          node-version: ${{ matrix.node-version }}
       - name: Caching the dependencies.
         uses: actions/cache@v4
         with:
@@ -80,6 +84,10 @@ jobs:
         run: ls
   deploy:
     needs: build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node-version: [23, 24]
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Download the job artifacts of the project build.
