@@ -4,6 +4,7 @@ on:
     branches:
       - 'main'
       - 'master'
+      - github-custom-composite-actions
 env:
   WORKFLOW_ENV_1: ${{ secrets.WORKFLOW_ENV_1 }}
   WORKFLOW_ENV_2: ${{ secrets.WORKFLOW_ENV_2 }}
