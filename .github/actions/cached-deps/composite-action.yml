@@ -1,0 +1,14 @@
+name: github-custom-composite-actions
+description: 'Customized Composite Actions to Implement Caching.'
+runs: 
+  using: composite
+  steps:
+    - name: Caching all the dependencies.
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: deps-node-modules-${{ hashFiles('**/pacakge-lock.json') }}
+    - name: Install all the dependencies.
+      run: npm install
+    - name: Update all the dependencies with sanity.
+      run: npm ci

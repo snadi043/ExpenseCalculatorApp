@@ -21,15 +21,8 @@ jobs:
     steps:
       - name: Get the code.
         uses: actions/checkout@v5
-      - name: Install all the dependencies.
-        run: npm install
-      - name: Caching all the dependencies.
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/pacakge-lock.json') }}
-      - name: Update all the dependencies with sanity.
-        run: npm ci
+      - name: Using Customized Composite Actions for Caching.
+        uses: ./github/actions/cached-deps/
       - name: Test the code.
         run: npm run test
       - name: Finish Test.
@@ -60,15 +53,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Caching the dependencies.
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install all the dependencies.
-        run: npm install
-      - name: Update all the dependencies with sanity.
-        run: npm ci
+      - name: Using Customized Composite Actions for Caching.
+        uses: ./github/actions/cached-deps/
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Publish the JS filename
@@ -110,15 +96,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache all the dependencies.
-        uses: actions/cache@v4
-        with: 
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install all the dependencies.
-        run: npm install
-      - name: Update all the dependencies with sanity.
-        run: npm ci
+      - name: Using Customized Composite Actions for Caching.
+        uses: ./github/actions/cached-deps/
       - name: Build the code. 
         run: NODE_OPTIONS=--openssl-legacy-provider npm run build
       - name: Deploy the application to the server.
